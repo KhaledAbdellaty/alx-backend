@@ -47,13 +47,11 @@ class Server:
         """A function that returns a dictionary
         containing the following key-value pairs."""
         data = self.get_page(page, page_size)
-        next_page = (page + 1) if data else None
-        p_size = len(data)
         return {
-            'page_size': p_size,
+            'page_size': len(data),
             'page': page,
             'data': data,
-            'next_page': next_page,
-            'prev_page': page - 1 if page - 1 > 0 else None,
+            'next_page': (page + 1) if data else None,
+            'prev_page': (page - 1) if page - 1 > 0 else None,
             'total_pages': math.ceil(len(self.__dataset) / page_size)
             }
