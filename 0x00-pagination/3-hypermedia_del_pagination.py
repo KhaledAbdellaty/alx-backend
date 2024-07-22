@@ -40,6 +40,17 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-            return {
-                 
-            }
+        """The method should return a dictionary:
+        index: the current start index of the return page.
+        page_size: the current page size.
+        data: the actual page of the dataset.
+        """
+        data = self.__indexed_dataset
+        assert index is not None and index >= 0 and index <= max(data.keys())
+        return {
+            'index': index,
+            'next_index': index + page_size,
+            'page_size': page_size,
+            'data': [self.__dataset[i]
+                     for i in range(index, (index + page_size))]
+        }
