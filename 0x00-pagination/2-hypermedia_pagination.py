@@ -48,8 +48,9 @@ class Server:
         containing the following key-value pairs."""
         data = self.get_page(page, page_size)
         next_page = (page + 1) if data else None
+        p_size = page_size if data else 0
         return {
-            'page_size': page_size,
+            'page_size': p_size,
             'page': page,
             'data': data,
             'next_page': next_page,
