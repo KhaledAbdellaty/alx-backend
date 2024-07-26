@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""FIFOCache class is a caching system"""
+"""LRUCache class is a caching system"""
 from base_caching import BaseCaching
 from collections import OrderedDict
 
 
-class FIFOCache(BaseCaching):
+class LRUCache(BaseCaching):
     """A class that inherits from
     BaseCaching and is a caching system"""
 
@@ -15,14 +15,18 @@ class FIFOCache(BaseCaching):
 
     def put(self, key, item):
         """A function that put the item value
-        for the key in cach data dict.
-        put in cache (FIFO algorithm)"""
+        for the key in cach data dict
+        discard the least recently used item (LRU algorithm)"""
         if key is None or item is None:
             return
-        self.cache_data[key] = item
-        if len(self.cache_data) > self.MAX_ITEMS:
-            discard_item, _ = self.cache_data.popitem(False)
-            print(f"DISCARD: {discard_item}")
+        if key not in self.cache_data:
+            if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
+                lru_key, _ = self.cache_data.popitem(True)
+                print("DISCARD:", lru_key)
+            self.cache_data[key] = item
+            self.cache_data.move_to_end(key, last=False)
+        else:
+            self.cache_data[key] = item
 
     def get(self, key):
         """A function that get the item value for

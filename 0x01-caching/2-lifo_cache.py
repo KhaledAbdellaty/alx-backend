@@ -15,7 +15,8 @@ class LIFOCache(BaseCaching):
 
     def put(self, key, item):
         """A function that put the item value
-        for the key in cach data dict"""
+        for the key in cach data dict
+        put in cache (LIFO algorithm)"""
         if key is None or item is None:
             return
         if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
