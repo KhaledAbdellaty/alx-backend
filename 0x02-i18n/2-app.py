@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Basic Babel setup."""
 from flask_babel import Babel
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 
 class Config:
@@ -22,6 +22,11 @@ def get_locale():
     match with our supported languages."""
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
+@app.route('/')
+def get_index() -> str:
+    """The home/index page.
+    """
+    return render_template('2-index.html')
 
 if __name__ == "__main__":
     app.run()
